@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vent Crawler - A Horror Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+
+        #gameContainer {
+            position: relative;
+            max-width: 100vw;
+            max-height: 100vh;
+        }
+
+        canvas {
+            display: block;
+            background: #0a0a0a;
+            border: 2px solid #333;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #ff4444;
+            font-size: 18px;
+            text-shadow: 2px 2px 4px #000;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        #oxygen {
+            margin-bottom: 10px;
+        }
+
+        #oxygenBar {
+            width: 200px;
+            height: 20px;
+            background: #222;
+            border: 2px solid #ff4444;
+            margin-top: 5px;
+        }
+
+        #oxygenFill {
+            height: 100%;
+            background: linear-gradient(to right, #ff4444, #ffaa00);
+            transition: width 0.3s;
+        }
+
+        #messages {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+            text-shadow: 2px 2px 4px #000;
+            pointer-events: none;
+            width: 80%;
+        }
+
+        #startScreen, #gameOverScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #ff4444;
+            z-index: 100;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 4px 4px 8px #000;
+        }
+
+        .instructions {
+            font-size: 16px;
+            margin: 20px;
+            max-width: 600px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        button {
+            background: #ff4444;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #ff6666;
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        #score {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="ui">
+            <div id="oxygen">
+                <div>OXYGEN</div>
+                <div id="oxygenBar">
+                    <div id="oxygenFill" style="width: 100%"></div>
+                </div>
+            </div>
+            <div id="distance">Distance: 0m</div>
+        </div>
+
+        <div id="messages"></div>
+
+        <div id="startScreen">
+            <h1>VENT CRAWLER</h1>
+            <div class="instructions">
+                You've fallen into the ventilation system of an abandoned facility.
+                <br><br>
+                Something is following you in the darkness...
+                <br><br>
+                <strong>CONTROLS:</strong><br>
+                WASD or Arrow Keys - Move<br>
+                SHIFT - Sprint (uses oxygen faster)<br>
+                <br>
+                Find oxygen tanks to survive.<br>
+                Keep moving. Don't let it catch you.
+            </div>
+            <button id="startButton">START GAME</button>
+        </div>
+
+        <div id="gameOverScreen" class="hidden">
+            <h1>GAME OVER</h1>
+            <div id="deathMessage"></div>
+            <div id="score"></div>
+            <button id="restartButton">TRY AGAIN</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
